@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   CircularProgress,
+  Dialog,
   styled,
   Typography,
 } from "@mui/material";
@@ -38,9 +39,17 @@ const Container = styled(Box)(() => ({
   },
 }));
 
+const DialoagContainer = styled(Box)(() => ({
+  display: "flex",
+  flexDirection: "column",
+  padding: "16px 24px",
+  width: "360px",
+}));
+
 const Dashboard = () => {
   const [patients, setPatients] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedPatient, setSelectedPatient] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -57,6 +66,118 @@ const Dashboard = () => {
 
   return (
     <>
+      <Dialog
+        open={selectedPatient}
+        title={selectedPatient?.name}
+        onClose={() => setSelectedPatient(null)}
+      >
+        <DialoagContainer>
+          <Typography
+            sx={{
+              fontSize: "20px",
+              fontWeight: "700",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+            }}
+          >
+            {selectedPatient?.name}
+            <Typography sx={{ color: "grey", fontWeight: "500" }}>
+              ({selectedPatient?.age})
+            </Typography>
+          </Typography>
+          <Typography sx={{ fontSize: "14px" }}>
+            {selectedPatient?.condition || "Hypertension"}
+          </Typography>
+          <Typography
+            sx={{
+              color: "black",
+              fontWeight: "500",
+              fontSize: "16px",
+              mt: "8px",
+            }}
+          >
+            Medical history:
+          </Typography>
+          {selectedPatient?.medicalHistory?.map((history, index) => (
+            <Box
+              sx={{
+                color: "black",
+                fontSize: "12px",
+                mt: "8px",
+              }}
+            >
+              <Typography sx={{ fontSize: "12px" }}>
+                Condition: {history?.condition}
+              </Typography>
+              <Typography sx={{ fontSize: "12px" }}>
+                Treatment: {history?.treatment}
+              </Typography>
+              <Typography sx={{ fontSize: "12px" }}>
+                Medication: {history?.medication}
+              </Typography>
+              <Typography sx={{ fontSize: "12px" }}>
+                Start date: {new Date(history?.date).toDateString()}
+              </Typography>
+            </Box>
+          ))}
+          <Typography
+            sx={{
+              color: "black",
+              fontWeight: "500",
+              fontSize: "16px",
+              mt: "8px",
+            }}
+          >
+            Health records:
+          </Typography>
+          {selectedPatient?.healthRecords?.map((history, index) => (
+            <Box
+              sx={{
+                color: "black",
+                fontSize: "12px",
+                mt: "8px",
+              }}
+            >
+              <Typography sx={{ fontSize: "12px" }}>
+                Lab results: {history?.labResults}
+              </Typography>
+              <Typography sx={{ fontSize: "12px" }}>
+                Treatment plan: {history?.treatmentPlan}
+              </Typography>
+              <Typography sx={{ fontSize: "12px" }}>
+                Diagnosis code: {history?.diagnosisCode}
+              </Typography>
+              <Typography sx={{ fontSize: "12px" }}>
+                Start date: {new Date(history?.date).toDateString()}
+              </Typography>
+            </Box>
+          ))}
+          <Box sx={{ display: "flex", justifyContent: "flex-end", mt: "16px" }}>
+            <Button
+              sx={{
+                fontSize: "14px",
+                color: "black",
+                textTransform: "none",
+              }}
+              onClick={() => setSelectedPatient(null)}
+            >
+              Close
+            </Button>
+            <Button
+              sx={{
+                ml: "8px",
+                fontSize: "14px",
+                background: "black",
+                textTransform: "none",
+              }}
+              variant="contained"
+            >
+              Create request
+            </Button>
+          </Box>
+        </DialoagContainer>
+      </Dialog>
       <Box
         sx={{
           display: "flex",
@@ -145,6 +266,7 @@ const Dashboard = () => {
                       border: "1px solid black",
                     }}
                     variant="outlined"
+                    onClick={() => setSelectedPatient(patient)}
                   >
                     View Details
                   </Button>
