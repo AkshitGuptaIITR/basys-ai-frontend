@@ -3,6 +3,7 @@ import {
   Button,
   CircularProgress,
   Dialog,
+  Grid2,
   styled,
   Typography,
 } from "@mui/material";
@@ -11,10 +12,10 @@ import patientAPI from "../../api/patientsAPI";
 import PatientIcon from "../../assets/patients-icon.webp";
 import { useNavigate } from "react-router-dom";
 
-const Container = styled(Box)(() => ({
-  display: "grid",
-  gridTemplateColumns: "repeat(4, 1fr)",
-  gap: "16px",
+const Container = styled(Grid2)(() => ({
+  // display: "grid",
+  // gridTemplateColumns: "repeat(4, 1fr)",
+  // gap: "16px",
 
   "& .card": {
     padding: "16px",
@@ -22,7 +23,8 @@ const Container = styled(Box)(() => ({
     flexDirection: "column",
     border: "1px solid black",
     borderRadius: "8px",
-    width: "calc(100% - 64px)",
+    width: "100%",
+    maxWidth: "400px",
     alignItems: "center",
 
     "& img": {
@@ -213,9 +215,9 @@ const Dashboard = () => {
         </Box>
       ) : (
         <>
-          <Container>
+          <Container container spacing={2}>
             {patients.map((patient) => (
-              <Box key={patient._id} className="card">
+              <Grid2 xs={12} sm={1} md={1} key={patient._id} className="card">
                 <img src={PatientIcon} alt="patient-icon" />
                 <Box className="flex-box">
                   <Typography
@@ -279,7 +281,7 @@ const Dashboard = () => {
                     Create Request
                   </Button>
                 </Box>
-              </Box>
+              </Grid2>
             ))}
           </Container>
         </>

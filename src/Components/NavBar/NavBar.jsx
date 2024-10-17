@@ -68,7 +68,7 @@ const NavBar = ({ user }) => {
               width: 32,
               height: 32,
               fontSize: 16,
-              ml: "32px",
+              // ml: "16px",
               cursor: "pointer",
             }}
           />
