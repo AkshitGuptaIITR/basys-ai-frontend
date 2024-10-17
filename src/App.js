@@ -7,6 +7,7 @@ import { ThemeProvider } from "@emotion/react";
 import theme from "./theme";
 import NavBar from "./Components/NavBar/NavBar";
 import Requests from "./Components/Requests/Requests";
+import { Box, CircularProgress } from "@mui/material";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -25,6 +26,23 @@ function App() {
     })();
   }, []);
 
+  const Loader = () => {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "95vh",
+          width: "100%",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Router>
@@ -37,7 +55,10 @@ function App() {
               </Route>
             </>
           ) : (
-            <Route path="/" element={<Login setUser={setUser} />} />
+            <Route
+              path="/"
+              element={isLoading ? <Loader /> : <Login setUser={setUser} />}
+            />
           )}
         </Routes>
       </Router>

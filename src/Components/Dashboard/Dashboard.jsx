@@ -1,4 +1,10 @@
-import { Box, Button, styled, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  styled,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import patientAPI from "../../api/patientsAPI";
 import PatientIcon from "../../assets/patients-icon.webp";
@@ -34,6 +40,7 @@ const Container = styled(Box)(() => ({
 
 const Dashboard = () => {
   const [patients, setPatients] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -42,6 +49,8 @@ const Dashboard = () => {
         setPatients(response?.data || []);
       } catch (err) {
         console.log(err);
+      } finally {
+        setIsLoading(false);
       }
     })();
   }, []);
@@ -71,67 +80,90 @@ const Dashboard = () => {
           Add patient
         </Button>
       </Box>
-      <Container>
-        {patients.map((patient) => (
-          <Box key={patient._id} className="card">
-            <img src={PatientIcon} alt="patient-icon" />
-            <Box className="flex-box">
-              <Typography
-                sx={{
-                  fontSize: "14px",
-                  fontWeight: "500",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                {patient.name}{" "}
-                <Typography sx={{ fontSize: "12px", color: "grey", ml: "4px" }}>
-                  ({patient.age})
-                </Typography>
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "flex-start",
-                justifyContent: "flex-start",
-                width: "100%",
-                mt: "4px",
-              }}
-            >
-              <Typography sx={{ color: "grey", fontSize: "14px" }}>
-                {patient?.condition || "Hypertension"}
-              </Typography>
-            </Box>
-            <Box
-              className={"flex-box"}
-              sx={{
-                justifyContent: "space-between !important",
-                width: "100%",
-                mt: "16px",
-              }}
-            >
-              <Button
-                sx={{
-                  color: "black",
-                  fontSize: "12px",
-                  textTransform: "none",
-                  border: "1px solid black",
-                }}
-                variant="outlined"
-              >
-                View Details
-              </Button>
-              <Button
-                variant="contained"
-                sx={{ color: "white", background: "black", fontSize: "12px" }}
-              >
-                Create Request
-              </Button>
-            </Box>
-          </Box>
-        ))}
-      </Container>
+      {isLoading ? (
+        <Box
+          className="loading"
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "50vh",
+            width: "100%",
+          }}
+        >
+          <CircularProgress color="black" />
+        </Box>
+      ) : (
+        <>
+          <Container>
+            {patients.map((patient) => (
+              <Box key={patient._id} className="card">
+                <img src={PatientIcon} alt="patient-icon" />
+                <Box className="flex-box">
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      fontWeight: "500",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    {patient.name}{" "}
+                    <Typography
+                      sx={{ fontSize: "12px", color: "grey", ml: "4px" }}
+                    >
+                      ({patient.age})
+                    </Typography>
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    justifyContent: "flex-start",
+                    width: "100%",
+                    mt: "4px",
+                  }}
+                >
+                  <Typography sx={{ color: "grey", fontSize: "14px" }}>
+                    {patient?.condition || "Hypertension"}
+                  </Typography>
+                </Box>
+                <Box
+                  className={"flex-box"}
+                  sx={{
+                    justifyContent: "space-between !important",
+                    width: "100%",
+                    mt: "16px",
+                  }}
+                >
+                  <Button
+                    sx={{
+                      color: "black",
+                      fontSize: "12px",
+                      textTransform: "none",
+                      border: "1px solid black",
+                    }}
+                    variant="outlined"
+                  >
+                    View Details
+                  </Button>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      color: "white",
+                      background: "black",
+                      fontSize: "12px",
+                    }}
+                  >
+                    Create Request
+                  </Button>
+                </Box>
+              </Box>
+            ))}
+          </Container>
+        </>
+      )}
     </>
   );
 };
