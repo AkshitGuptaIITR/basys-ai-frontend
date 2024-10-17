@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import authAPI from "../../api/authAPI";
+import { toast } from "react-toastify";
 
 const Container = styled(Box)(() => ({
   display: "flex",
@@ -95,9 +96,11 @@ const Login = ({ setUser }) => {
       setIsLoading(true);
 
       const response = await authAPI.login(loginState);
+      toast.success("Login successful");
       setUser(response?.data || {});
     } catch (err) {
       console.log(err);
+      toast.error(err?.response?.data?.message || "Something went wrong");
     } finally {
       setIsLoading(false);
     }
