@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, styled, Typography } from "@mui/material";
+import { Avatar, Box, styled, Typography } from "@mui/material";
 import React from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 
@@ -15,15 +15,6 @@ const NavBarContainer = styled(Box)(() => ({
     flexDirection: "row",
     gap: "16px",
     alignItems: "center",
-
-    "& .button": {
-      backgroundColor: "black",
-      color: "white",
-      padding: "4px 16px",
-      fontSize: "14px !important",
-      fontWeight: "500",
-      textTransform: "none",
-    },
 
     "& a": {
       textDecoration: "none",
@@ -47,7 +38,7 @@ const NavBar = ({ user }) => {
       <NavBarContainer>
         <Typography
           component={"h3"}
-          sx={{ fontWeight: "600", fontSize: "20px", cursor: "pointer" }}
+          sx={{ fontWeight: "700", fontSize: "20px", cursor: "pointer" }}
           onClick={() => navigate("/")}
         >
           Dashboard
@@ -65,9 +56,6 @@ const NavBar = ({ user }) => {
           >
             Requests
           </Link>
-          <Button className="button" variant="contained">
-            Create request
-          </Button>
           <Avatar
             id="avatar"
             size="normal"
