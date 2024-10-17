@@ -8,6 +8,9 @@ import theme from "./theme";
 import NavBar from "./Components/NavBar/NavBar";
 import Requests from "./Components/Requests/Requests";
 import { Box, CircularProgress } from "@mui/material";
+import CreateRequestForm from "./Components/CreateRequestForm/CreateRequestForm";
+import { Slide, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -45,6 +48,20 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <ToastContainer
+        toastClassName="react-toastify-style"
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={true}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Slide}
+      />
       <Router>
         <Routes>
           {user ? (
@@ -52,6 +69,11 @@ function App() {
               <Route path="/" element={<NavBar user={user} />}>
                 <Route index element={<Dashboard />} />
                 <Route path={"request"} element={<Requests />} />
+                <Route
+                  path="create-request/:patientId"
+                  element={<CreateRequestForm />}
+                />
+                <Route path={"*"} element={<Dashboard />} />
               </Route>
             </>
           ) : (

@@ -9,6 +9,7 @@ import {
 import React, { useEffect, useState } from "react";
 import patientAPI from "../../api/patientsAPI";
 import PatientIcon from "../../assets/patients-icon.webp";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled(Box)(() => ({
   display: "grid",
@@ -44,12 +45,15 @@ const DialoagContainer = styled(Box)(() => ({
   flexDirection: "column",
   padding: "16px 24px",
   width: "360px",
+  maxHeight: "520px",
+  overflowY: "auto",
 }));
 
 const Dashboard = () => {
   const [patients, setPatients] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedPatient, setSelectedPatient] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -172,6 +176,9 @@ const Dashboard = () => {
                 textTransform: "none",
               }}
               variant="contained"
+              onClick={() =>
+                navigate(`/create-request/${selectedPatient?._id}`)
+              }
             >
               Create request
             </Button>
@@ -190,16 +197,6 @@ const Dashboard = () => {
         <Typography sx={{ fontWeight: "600", fontSize: "18px" }}>
           Patients
         </Typography>
-        <Button
-          sx={{
-            border: "1px solid black",
-            textTransform: "none",
-            color: "black",
-          }}
-          variant="outlined"
-        >
-          Add patient
-        </Button>
       </Box>
       {isLoading ? (
         <Box
@@ -277,6 +274,7 @@ const Dashboard = () => {
                       background: "black",
                       fontSize: "12px",
                     }}
+                    onClick={() => navigate(`/create-request/${patient?._id}`)}
                   >
                     Create Request
                   </Button>

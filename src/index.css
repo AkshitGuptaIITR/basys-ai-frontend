@@ -11,3 +11,40 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.react-toastify-style {
+  font-family: "RedHatFont", sans-serif !important;
+  border-radius: 0 !important;
+  min-height: 50px !important;
+
+  .Toastify__toast {
+    font-family: "RedHatFont", sans-serif !important;
+    padding: 0.5em !important;
+  }
+
+  .Toastify__toast-theme--colored {
+    font-family: "RedHatFont", sans-serif !important;
+    padding: 0.5em !important;
+  }
+
+  &.Toastify__toast--success {
+    background: #d1ffec !important;
+    color: #0b8a00 !important;
+  }
+
+  &.Toastify__toast--error {
+    background: #ffeaec !important;
+    color: #f43131 !important;
+  }
+
+  &.Toastify__toast--warning {
+    background: #ffefb7 !important;
+    color: #bc7c00 !important;
+  }
+
+  &.Toastify__toast--info {
+    background: #c2f0ff !important;
+    color: #181ec0 !important;
+  }
+}
+
