@@ -46,9 +46,11 @@ const DialoagContainer = styled(Box)(() => ({
   display: "flex",
   flexDirection: "column",
   padding: "16px 24px",
-  width: "360px",
+  maxWidth: "360px",
+  width: "90%",
   maxHeight: "520px",
   overflowY: "auto",
+  overflowX: "hidden",
 }));
 
 const Dashboard = () => {
